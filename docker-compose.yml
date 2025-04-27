@@ -1,0 +1,37 @@
+services:
+  js:
+    container_name: tasks_js
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
+    env_file:
+      - .env.dist
+    networks:
+      - app
+
+  tasks_api:
+    container_name: tasks_api
+    working_dir: /app
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
+    command: nest start --debug=0.0.0.0:9229 --watch
+    hostname: tasks_api
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    networks:
+      - app
+    labels:
+      com.app: app
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000/api/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  app:
+
+volumes:
+  build:

@@ -1,0 +1,12 @@
+x-common:
+  volumes: &volumes
+    - build:/app/dist/
+    - .:/app:delegated
+    - ./.env:/app/dist/.env
+
+services:
+  js:
+    volumes: *volumes
+
+  tasks_api:
+    volumes: *volumes

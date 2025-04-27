@@ -1,0 +1,7 @@
+coverage
+dist
+docker/dev
+node_modules
+.git
+.env
+.idea
